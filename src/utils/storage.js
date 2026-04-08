@@ -40,12 +40,8 @@ export const initializeDemoData = () => {
     { id: 4, username: 'mavluda_axmedova', password: '2024def', role: 'teacher', name: 'Mavluda Axmedova' }
   ];
 
-  const existingUsers = storage.get('users');
-  
-  // Agar users yo'q bo'lsa yoki faqat eski admin bo'lsa, yangilaymiz
-  if (!existingUsers || (existingUsers.length === 1 && existingUsers[0].password === 'admin123')) {
-    storage.set('users', defaultUsers);
-  }
+  // Har doim users arrayini yangilaymiz
+  storage.set('users', defaultUsers);
 
   if (!storage.get('students')) {
     storage.set('students', [

@@ -16,7 +16,11 @@ const Login = () => {
     e.preventDefault();
     setError('');
 
+    console.log('Login attempt:', formData.username, formData.password);
+    
     const result = login(formData.username, formData.password);
+    console.log('Login result:', result);
+    
     if (result.success) {
       navigate('/dashboard');
     } else {
