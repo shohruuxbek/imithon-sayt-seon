@@ -33,13 +33,18 @@ export const storage = {
 
 // Initialize demo data if not exists
 export const initializeDemoData = () => {
-  if (!storage.get('users')) {
-    storage.set('users', [
-      { id: 1, username: 'admin', password: 'SeonAkademiya2024!', role: 'admin', name: 'Administrator' },
-      { id: 2, username: 'boburjon_jumanazarov', password: '2024abc', role: 'teacher', name: 'Boburjon Jumanazarov' },
-      { id: 3, username: 'islomboy_karimov', password: '2024xyz', role: 'teacher', name: 'Islomboy Karimov' },
-      { id: 4, username: 'mavluda_axmedova', password: '2024def', role: 'teacher', name: 'Mavluda Axmedova' }
-    ]);
+  const defaultUsers = [
+    { id: 1, username: 'admin', password: 'SeonAkademiya2024!', role: 'admin', name: 'Administrator' },
+    { id: 2, username: 'boburjon_jumanazarov', password: '2024abc', role: 'teacher', name: 'Boburjon Jumanazarov' },
+    { id: 3, username: 'islomboy_karimov', password: '2024xyz', role: 'teacher', name: 'Islomboy Karimov' },
+    { id: 4, username: 'mavluda_axmedova', password: '2024def', role: 'teacher', name: 'Mavluda Axmedova' }
+  ];
+
+  const existingUsers = storage.get('users');
+  
+  // Agar users yo'q bo'lsa yoki faqat eski admin bo'lsa, yangilaymiz
+  if (!existingUsers || (existingUsers.length === 1 && existingUsers[0].password === 'admin123')) {
+    storage.set('users', defaultUsers);
   }
 
   if (!storage.get('students')) {
