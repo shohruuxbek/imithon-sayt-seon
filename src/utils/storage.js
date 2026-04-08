@@ -35,9 +35,7 @@ export const storage = {
 export const initializeDemoData = () => {
   if (!storage.get('users')) {
     storage.set('users', [
-      { id: 1, username: 'admin', password: 'admin123', role: 'admin', name: 'Administrator' },
-      { id: 2, username: 'teacher1', password: 'teacher123', role: 'teacher', name: 'John Teacher' },
-      { id: 3, username: 'student1', password: 'student123', role: 'student', name: 'Alex Student' }
+      { id: 1, username: 'admin', password: 'admin123', role: 'admin', name: 'Administrator' }
     ]);
   }
 

@@ -29,30 +29,6 @@ export const AuthProvider = ({ children }) => {
     return { success: false, message: 'Username yoki password noto\'g\'ri' };
   };
 
-  const register = (userData) => {
-    const users = storage.get('users', []);
-    const existingUser = users.find(u => u.username === userData.username);
-    
-    if (existingUser) {
-      return { success: false, message: 'Bu username allaqachon mavjud' };
-    }
-
-    const newUser = {
-      id: users.length + 1,
-      ...userData,
-      role: userData.role || 'student'
-    };
-
-    users.push(newUser);
-    storage.set('users', users);
-
-    const { password, ...userWithoutPassword } = newUser;
-    setUser(userWithoutPassword);
-    storage.set('currentUser', userWithoutPassword);
-
-    return { success: true, user: userWithoutPassword };
-  };
-
   const logout = () => {
     setUser(null);
     storage.remove('currentUser');
@@ -71,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, canEdit, canDelete }}>
+    <AuthContext.Provider value={{ user, login, logout, canEdit, canDelete }}>
       {children}
     </AuthContext.Provider>
   );
