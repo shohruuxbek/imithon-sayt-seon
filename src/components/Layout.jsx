@@ -12,6 +12,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import logoImage from '../assets/logo.jpg';
 
 const Layout = () => {
   const { user, logout, canEdit, canDelete } = useAuth();
@@ -53,7 +54,9 @@ const Layout = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <h2>SEON AKADEMIY</h2>
+          <div className="logo-container">
+            <img src={logoImage} alt="SEON Logo" className="logo-image" />
+          </div>
           <div className="user-info">
             <div className="user-avatar">{user?.name?.charAt(0)}</div>
             <div>
