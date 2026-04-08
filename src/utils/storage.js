@@ -35,7 +35,10 @@ export const storage = {
 export const initializeDemoData = () => {
   if (!storage.get('users')) {
     storage.set('users', [
-      { id: 1, username: 'admin', password: 'admin123', role: 'admin', name: 'Administrator' }
+      { id: 1, username: 'admin', password: 'SeonAkademiya2024!', role: 'admin', name: 'Administrator' },
+      { id: 2, username: 'boburjon_jumanazarov', password: '2024abc', role: 'teacher', name: 'Boburjon Jumanazarov' },
+      { id: 3, username: 'islomboy_karimov', password: '2024xyz', role: 'teacher', name: 'Islomboy Karimov' },
+      { id: 4, username: 'mavluda_axmedova', password: '2024def', role: 'teacher', name: 'Mavluda Axmedova' }
     ]);
   }
 
