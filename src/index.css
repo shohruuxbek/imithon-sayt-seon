@@ -295,11 +295,12 @@ body {
 }
 
 .logo-image {
-  max-width: 180px;
-  max-height: 80px;
-  object-fit: contain;
-  border-radius: 4px;
-  filter: brightness(0) invert(1);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar-header h2 {
