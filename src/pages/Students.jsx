@@ -5,7 +5,7 @@ import DataTable from '../components/DataTable';
 
 const Students = () => {
   const [students, setStudents] = useState([]);
-  const { canEdit, canDelete } = useAuth();
+  const { user, canEdit, canDelete } = useAuth();
 
   useEffect(() => {
     loadStudents();
@@ -13,18 +13,47 @@ const Students = () => {
 
   const loadStudents = () => {
     const data = storage.get('students', []);
+    // O'qituvchi faqat o'z guruhidagi o'quvchilarni ko'radi
+    if (user?.role === 'teacher') {
+      const teacherData = storage.get('teachers', []);
+      const currentTeacher = teacherData.find(t => t.name === user?.name);
+      if (currentTeacher) {
+        return setStudents(data.filter(s => s.course === currentTeacher.subject));
+      }
+    }
     setStudents(data);
   };
 
   const handleAdd = (formData) => {
+    // Telefon raqamidan login yaratish
+    const cleanPhone = formData.phone.replace(/[^0-9]/g, '');
+    const username = cleanPhone.length >= 9 ? cleanPhone.substring(cleanPhone.length - 9) : cleanPhone;
+    const password = Math.random().toString(36).slice(-8); // Random parol
+    
     const newStudent = {
       id: students.length + 1,
       ...formData,
-      status: 'active'
+      status: 'active',
+      login: username,
+      password: password
     };
     const updated = [...students, newStudent];
     setStudents(updated);
     storage.set('students', updated);
+
+    // O'quvchini users'ga ham qo'shamiz (tizimga kirishi uchun)
+    const users = storage.get('users', []);
+    users.push({
+      id: users.length + 1,
+      username: username,
+      password: password,
+      role: 'student',
+      name: formData.name
+    });
+    storage.set('users', users);
+
+    // Login ma'lumotlarini ko'rsatish
+    alert(`O'quvchi qo'shildi!\n\nLogin: ${username}\nParol: ${password}\n\nBu ma'lumotlarni o'quvchiga bering!`);
   };
 
   const handleEdit = (id, formData) => {
