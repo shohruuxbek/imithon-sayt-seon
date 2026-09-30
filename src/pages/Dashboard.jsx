@@ -21,7 +21,7 @@ const Dashboard = () => {
 
     const totalRevenue = payments
       .filter(p => p.status === 'completed')
-      .reduce((sum, p) => sum + p.amount, 0);
+      .reduce((sum, p) => sum + (Number(p.amount) || 0), 0);
 
     const activeCourses = courses.filter(c => c.status === 'active').length;
 

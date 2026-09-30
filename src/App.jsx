@@ -21,7 +21,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route
-            path="/"
             element={
               <PrivateRoute>
                 <Layout />
@@ -35,6 +34,7 @@ function App() {
             <Route path="payments" element={<Payments />} />
             <Route path="attendance" element={<Attendance />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
