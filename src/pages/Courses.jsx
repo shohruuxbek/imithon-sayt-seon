@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { storage } from '../utils/storage';
+import { storage, nextId } from '../utils/storage';
 import { useAuth } from '../context/AuthContext';
 import DataTable from '../components/DataTable';
 
@@ -18,9 +18,9 @@ const Courses = () => {
 
   const handleAdd = (formData) => {
     const newCourse = {
-      id: courses.length + 1,
-      ...formData,
-      status: 'active'
+      id: nextId(courses),
+      status: 'active',
+      ...formData
     };
     const updated = [...courses, newCourse];
     setCourses(updated);
@@ -40,7 +40,7 @@ const Courses = () => {
   };
 
   const columns = [
-    { header: 'ID', accessor: 'id' },
+    { header: 'ID', accessor: 'id', editable: false },
     { header: 'Kurs nomi', accessor: 'name', required: true },
     { header: 'O\'qituvchi', accessor: 'teacher', required: true },
     { header: 'Davomiyligi', accessor: 'duration', required: true },
@@ -49,7 +49,7 @@ const Courses = () => {
       accessor: 'price', 
       type: 'number',
       required: true,
-      render: (value) => `${value.toLocaleString()} so'm`
+      render: (value) => `${Number(value || 0).toLocaleString()} so'm`
     },
     { header: 'Talabalar soni', accessor: 'students', type: 'number' },
     {

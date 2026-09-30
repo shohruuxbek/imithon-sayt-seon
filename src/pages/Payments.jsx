@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { storage } from '../utils/storage';
+import { storage, nextId } from '../utils/storage';
 import { useAuth } from '../context/AuthContext';
 import DataTable from '../components/DataTable';
 
@@ -18,9 +18,9 @@ const Payments = () => {
 
   const handleAdd = (formData) => {
     const newPayment = {
-      id: payments.length + 1,
-      ...formData,
-      status: 'pending'
+      id: nextId(payments),
+      status: 'pending',
+      ...formData
     };
     const updated = [...payments, newPayment];
     setPayments(updated);
@@ -40,14 +40,14 @@ const Payments = () => {
   };
 
   const columns = [
-    { header: 'ID', accessor: 'id' },
+    { header: 'ID', accessor: 'id', editable: false },
     { header: 'Talaba', accessor: 'student', required: true },
     { 
       header: 'Summa (so\'m)', 
       accessor: 'amount', 
       type: 'number',
       required: true,
-      render: (value) => `${value.toLocaleString()} so'm`
+      render: (value) => `${Number(value || 0).toLocaleString()} so'm`
     },
     { header: 'Sana', accessor: 'date', type: 'date', required: true },
     { header: 'Turi', accessor: 'type', required: true },

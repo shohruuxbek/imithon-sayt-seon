@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { storage } from '../utils/storage';
+import { storage, nextId } from '../utils/storage';
 import { useAuth } from '../context/AuthContext';
 import DataTable from '../components/DataTable';
 
@@ -18,7 +18,7 @@ const Attendance = () => {
 
   const handleAdd = (formData) => {
     const newAttendance = {
-      id: attendance.length + 1,
+      id: nextId(attendance),
       ...formData
     };
     const updated = [...attendance, newAttendance];
@@ -39,7 +39,7 @@ const Attendance = () => {
   };
 
   const columns = [
-    { header: 'ID', accessor: 'id' },
+    { header: 'ID', accessor: 'id', editable: false },
     { header: 'Talaba', accessor: 'student', required: true },
     { header: 'Kurs', accessor: 'course', required: true },
     { header: 'Sana', accessor: 'date', type: 'date', required: true },

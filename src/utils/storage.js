@@ -31,6 +31,9 @@ export const storage = {
   }
 };
 
+export const nextId = (items) =>
+  items.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1;
+
 // Initialize demo data if not exists
 export const initializeDemoData = () => {
   const defaultUsers = [
@@ -40,8 +43,10 @@ export const initializeDemoData = () => {
     { id: 4, username: 'mavluda_axmedova', password: '2024def', role: 'teacher', name: 'Mavluda Axmedova' }
   ];
 
-  // Har doim users arrayini yangilaymiz
-  storage.set('users', defaultUsers);
+  // Standart foydalanuvchilarni yangilaymiz, qo'shilgan o'quvchilarni saqlab qolamiz
+  const defaultUsernames = defaultUsers.map(u => u.username);
+  const extraUsers = storage.get('users', []).filter(u => !defaultUsernames.includes(u.username));
+  storage.set('users', [...defaultUsers, ...extraUsers]);
 
   if (!storage.get('students')) {
     storage.set('students', [

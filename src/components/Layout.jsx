@@ -15,10 +15,9 @@ import {
 import logoImage from '../assets/logo.jpg';
 
 const Layout = () => {
-  const { user, logout, canEdit, canDelete } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [

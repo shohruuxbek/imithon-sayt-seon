@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-import { storage } from '../utils/storage';
-import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 import { Plus, Edit, Trash2, Search, X } from 'lucide-react';
 
 const DataTable = ({ title, data, columns, onAdd, onEdit, onDelete, canEdit, canDelete }) => {
@@ -131,8 +129,11 @@ const DataTable = ({ title, data, columns, onAdd, onEdit, onDelete, canEdit, can
                   ) : (
                     <input
                       type={col.type || 'text'}
-                      value={formData[col.accessor] || ''}
-                      onChange={(e) => setFormData({ ...formData, [col.accessor]: e.target.value })}
+                      value={formData[col.accessor] ?? ''}
+                      onChange={(e) => setFormData({
+                        ...formData,
+                        [col.accessor]: col.type === 'number' && e.target.value !== '' ? Number(e.target.value) : e.target.value
+                      })}
                       required={col.required}
                       placeholder={col.placeholder || ''}
                     />

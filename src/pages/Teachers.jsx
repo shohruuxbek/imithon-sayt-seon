@@ -29,7 +29,7 @@ const Teachers = () => {
   };
 
   const columns = [
-    { header: 'ID', accessor: 'id' },
+    { header: 'ID', accessor: 'id', editable: false },
     { header: 'Ism', accessor: 'name', required: true },
     { header: 'Telefon', accessor: 'phone', required: true },
     { header: 'Email', accessor: 'email', type: 'email' },

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogIn } from 'lucide-react';
 
@@ -9,18 +9,15 @@ const Login = () => {
     password: ''
   });
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
 
-    console.log('Login attempt:', formData.username, formData.password);
-    
     const result = login(formData.username, formData.password);
-    console.log('Login result:', result);
-    
+
     if (result.success) {
       navigate('/dashboard');
     } else {
@@ -34,6 +31,10 @@ const Login = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  if (user) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <div className="auth-container">
